@@ -1,89 +1,177 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Image Tool - Convert Image MB to KB</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Compress Image to Target KB Online (Free) | Image Tools</title>
 
-<style>
-body {
-    font-family: Arial;
-    margin: 0;
-    background: #f4f6fb;
-}
+  <!-- SEO -->
+  <meta name="description" content="Free online image compressor to reduce image size to target KB without uploading. Convert MB to KB, resize & compress JPG/PNG/WebP on your device." />
+  <meta name="robots" content="index,follow" />
+  <link rel="canonical" href="https://strangerns.github.io/image-tools-site/" />
 
-.header {
-    background: #4c5bd4;
-    color: white;
-    padding: 15px;
-    font-size: 22px;
-    font-weight: bold;
-}
+  <!-- Keywords (optional; Google mostly ignores but harmless) -->
+  <meta name="keywords" content="compress image to kb, reduce image size, image compressor, mb to kb, resize image, jpg compressor, png compressor, webp converter, online image tools" />
 
-.container {
-    padding: 20px;
-}
+  <!-- Open Graph -->
+  <meta property="og:title" content="Compress Image to Target KB Online (Free) | Image Tools" />
+  <meta property="og:description" content="Reduce image size to target KB (MB to KB). Works in your browser — no upload." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://strangerns.github.io/image-tools-site/" />
 
-.card {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-}
+  <link rel="stylesheet" href="style.css" />
 
-.drop-area {
-    border: 2px dashed #4c5bd4;
-    padding: 30px;
-    text-align: center;
-    margin: 20px 0;
-}
-
-button {
-    background: #4c5bd4;
-    color: white;
-    border: none;
-    padding: 12px 20px;
-    font-size: 16px;
-    border-radius: 5px;
-}
-
-input {
-    padding: 10px;
-    font-size: 16px;
-    width: 100px;
-}
-</style>
+  <!-- FAQ Structured Data (helps SEO) -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"FAQPage",
+    "mainEntity":[
+      {
+        "@type":"Question",
+        "name":"How to compress image to target KB?",
+        "acceptedAnswer":{"@type":"Answer","text":"Select an image, enter target KB, optionally set max width, then click Compress & Download. Processing happens in your browser."}
+      },
+      {
+        "@type":"Question",
+        "name":"Is it safe? Do you upload my photos?",
+        "acceptedAnswer":{"@type":"Answer","text":"No upload. Everything runs locally in your browser."}
+      },
+      {
+        "@type":"Question",
+        "name":"Why can't 3MB image become 60KB?",
+        "acceptedAnswer":{"@type":"Answer","text":"Very low targets often require reducing width/quality. Use max width 1280/720 or increase target KB."}
+      }
+    ]
+  }
+  </script>
 </head>
 
 <body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">IT</div>
+      <div>
+        <div class="brandTitle">Image Tools</div>
+        <div class="brandSub">Compress • Convert • Resize (No Upload)</div>
+      </div>
+    </div>
 
-<div class="header">
-IMAGE TOOL
-</div>
+    <nav class="nav">
+      <a href="./" class="active">Home</a>
+      <a href="./about.html">About</a>
+      <a href="./contact.html">Contact</a>
+      <a href="./privacy-policy.html">Privacy</a>
+    </nav>
+  </header>
 
-<div class="container">
-<div class="card">
+  <main class="wrap">
+    <section class="hero">
+      <h1>Compress Image to Target KB (Free Online)</h1>
+      <p class="muted">
+        Reduce image size from <b>MB to KB</b> directly in your browser. Works for JPG/PNG/WebP. No upload.
+      </p>
 
-<h2>Convert Image From MB To KB</h2>
+      <div class="toolGrid">
+        <!-- TOOL 1 -->
+        <section class="card">
+          <div class="cardHead">
+            <h2>Compress Image to Target KB</h2>
+            <span class="pill">Max 20MB</span>
+          </div>
 
-<div class="drop-area">
-<input type="file" id="fileInput">
-<br><br>
-<button onclick="compress()">Select Images</button>
-</div>
+          <div id="dropZone" class="drop">
+            <input id="fileInput" type="file" accept="image/*" multiple />
+            <div class="dropInner">
+              <div class="dropTitle">Select or Drag & Drop Images Here</div>
+              <div class="dropSub">Multiple images supported</div>
+              <button class="btn" type="button" id="selectBtn">Select Images</button>
+            </div>
+          </div>
 
-Size:
-<input type="number" id="targetKB" value="100"> KB
+          <div class="row">
+            <label>
+              Target Size (KB)
+              <input id="targetKB" type="number" min="10" value="200" />
+            </label>
 
-<br><br>
+            <label>
+              Max Width (px) <span class="hint">(auto)</span>
+              <input id="maxWidth" type="number" min="0" placeholder="e.g. 1280" />
+            </label>
 
-<button onclick="compress()">Reduce Size</button>
+            <label>
+              Output
+              <select id="outFormat">
+                <option value="image/jpeg">JPG</option>
+                <option value="image/webp">WEBP</option>
+                <option value="image/png">PNG</option>
+              </select>
+            </label>
+          </div>
 
-<p id="result"></p>
+          <div class="row">
+            <button class="btn btnPrimary" id="compressBtn" type="button">Compress & Download</button>
+            <button class="btn btnGhost" id="clearBtn" type="button">Clear</button>
+          </div>
 
-</div>
-</div>
+          <div class="result">
+            <div id="statusLine" class="muted">Result: —</div>
+            <div class="progressWrap">
+              <div id="progressBar" class="progressBar"></div>
+            </div>
+            <div id="list"></div>
+          </div>
 
-<script src="app.js"></script>
+          <div class="note">
+            Tip: If target is very low (like 60KB), set <b>Max Width 720</b> or increase target KB.
+          </div>
+        </section>
 
+        <!-- ADS / SIDE -->
+        <aside class="card adCard">
+          <h3>Advertisements</h3>
+          <div class="adBox">
+            <div class="muted">Ad space (AdSense ready)</div>
+          </div>
+
+          <h3 class="mt">Popular Keywords</h3>
+          <div class="tags">
+            <span>compress image to kb</span>
+            <span>reduce image size</span>
+            <span>mb to kb</span>
+            <span>jpg compressor</span>
+            <span>png compressor</span>
+            <span>resize image</span>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="card mt">
+      <h2>How it works</h2>
+      <ol class="steps">
+        <li>Select or drag images</li>
+        <li>Enter target KB (example: 200)</li>
+        <li>Max width auto fills (you can edit)</li>
+        <li>Click <b>Compress & Download</b></li>
+      </ol>
+      <p class="muted">
+        Processing runs on your device (browser). Your images are not uploaded.
+      </p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div>© <span id="year"></span> Image Tools • Built with GitHub Pages</div>
+    <div class="footerLinks">
+      <a href="./privacy-policy.html">Privacy Policy</a>
+      <a href="./about.html">About</a>
+      <a href="./contact.html">Contact</a>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
 </body>
 </html>
