@@ -1,83 +1,115 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Image Tools - Free Online</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
+  <header class="top">
+    <h1>Image Tools</h1>
+    <p>Compress • Convert • Resize • Target KB (Max 20MB)</p>
+  </header>
 
-<header class="top">
-  <h1>Image Tools</h1>
-  <p>Compress • Convert • Resize • Passport Photo</p>
-</header>
+  <main class="wrap">
 
-<main class="wrap">
+    <!-- 1) NORMAL COMPRESS -->
+    <section class="card">
+      <h2>Compress Image</h2>
+      <p class="muted">Max image size: <b>20MB</b></p>
 
-<section class="card">
-  <h2>Compress Image</h2>
-  <input type="file" id="compressFile">
-  <button onclick="compressImage()">Compress & Download</button>
-</section>
+      <div class="row">
+        <input type="file" id="compressFile" accept="image/*" />
+      </div>
 
-<section class="card">
-  <h2>Convert Image</h2>
-  <input type="file" id="convertFile">
-  <select id="format">
-    <option value="image/jpeg">JPG</option>
-    <option value="image/png">PNG</option>
-    <option value="image/webp">WEBP</option>
-  </select>
-  <button onclick="convertImage()">Convert & Download</button>
-</section>
+      <div class="row">
+        <label class="muted">Quality (1–95)</label>
+        <input type="number" id="compressQuality" value="75" min="1" max="95" />
+        <select id="compressFormat">
+          <option value="image/jpeg">JPG</option>
+          <option value="image/webp">WEBP</option>
+        </select>
+        <button class="primary" onclick="compressImage()">Compress & Download</button>
+      </div>
 
-<section class="card">
-  <h2>Resize Image</h2>
-  <input type="file" id="resizeFile">
-  <input type="number" id="width" placeholder="Width">
-  <input type="number" id="height" placeholder="Height">
-  <button onclick="resizeImage()">Resize & Download</button>
-</section>
+      <div id="compressStatus" class="result">Result: —</div>
+    </section>
 
-</main>
+    <!-- 2) CONVERT -->
+    <section class="card">
+      <h2>Convert Image</h2>
+      <p class="muted">Max image size: <b>20MB</b></p>
 
-<script src="app.js"></script>
+      <div class="row">
+        <input type="file" id="convertFile" accept="image/*" />
+        <select id="format">
+          <option value="image/jpeg">JPG</option>
+          <option value="image/png">PNG</option>
+          <option value="image/webp">WEBP</option>
+        </select>
+        <button class="primary" onclick="convertImage()">Convert & Download</button>
+      </div>
+      <div id="convertStatus" class="result">Result: —</div>
+    </section>
 
+    <!-- 3) RESIZE -->
+    <section class="card">
+      <h2>Resize Image</h2>
+      <p class="muted">Max image size: <b>20MB</b></p>
+
+      <div class="row">
+        <input type="file" id="resizeFile" accept="image/*" />
+      </div>
+      <div class="row">
+        <input type="number" id="width" placeholder="Width (px)" inputmode="numeric" />
+        <input type="number" id="height" placeholder="Height (px)" inputmode="numeric" />
+        <select id="resizeFormat">
+          <option value="image/jpeg">JPG</option>
+          <option value="image/png">PNG</option>
+          <option value="image/webp">WEBP</option>
+        </select>
+        <button class="primary" onclick="resizeImage()">Resize & Download</button>
+      </div>
+      <div id="resizeStatus" class="result">Result: —</div>
+    </section>
+
+    <!-- 4) COMPRESS TO TARGET KB -->
+    <section class="card">
+      <h2>Compress Image to Target KB</h2>
+      <p class="muted">Max image size: <b>20MB</b> | Minimum target: <b>20KB</b></p>
+
+      <div class="row">
+        <input id="tkFile" type="file" accept="image/*" />
+        <div id="tkInfo" class="muted">No file chosen</div>
+      </div>
+
+      <div class="row">
+        <input id="tkTargetKb" type="number" inputmode="numeric" placeholder="Target KB (e.g. 200)" />
+        <select id="tkFormat">
+          <option value="image/jpeg">JPG</option>
+          <option value="image/webp">WEBP</option>
+        </select>
+        <input id="tkMaxWidth" type="number" inputmode="numeric" placeholder="Max width optional (e.g. 1280)" />
+        <button id="tkStart" class="primary">Compress</button>
+      </div>
+
+      <div id="tkResult" class="result">Result: —</div>
+
+      <div class="row">
+        <a id="tkDownload" class="btn" href="#" style="display:none;">Download</a>
+      </div>
+
+      <img id="tkPreview" alt="" class="preview" style="display:none;" />
+    </section>
+
+  </main>
+
+  <footer class="foot muted">
+    Works in your browser (no upload). Max 20MB per image.
+  </footer>
+
+  <script src="app.js"></script>
 </body>
 </html>
-
-<section class="card">
-  <h2>Compress Image to Target KB</h2>
-  <p class="muted">Max image size: <b>20MB</b> | Minimum target: <b>20KB</b></p>
-
-  <div class="row">
-    <label class="btn">
-      Choose Image
-      <input id="tkFile" type="file" accept="image/*" hidden>
-    </label>
-    <div id="tkInfo" class="muted">No file chosen</div>
-  </div>
-
-  <div class="row">
-    <input id="tkTargetKb" type="number" inputmode="numeric" placeholder="Target KB (e.g. 200)" />
-    <select id="tkFormat">
-      <option value="image/jpeg">JPG</option>
-      <option value="image/webp">WEBP</option>
-    </select>
-    <button id="tkStart" class="primary">Compress</button>
-  </div>
-
-  <div class="row">
-    <label class="muted">Max width (optional)</label>
-    <input id="tkMaxWidth" type="number" inputmode="numeric" placeholder="e.g. 1280" />
-  </div>
-
-  <div id="tkResult" class="result">Result: —</div>
-
-  <div class="row" style="margin-top:10px;">
-    <a id="tkDownload" class="btn" href="#" style="display:none;">Download</a>
-  </div>
-
-  <img id="tkPreview" alt="" style="max-width:100%; border-radius:12px; display:none; margin-top:10px;" />
-</section>
